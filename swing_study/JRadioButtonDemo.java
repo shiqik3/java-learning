@@ -14,7 +14,6 @@ public class JRadioButtonDemo extends JFrame{
 		setBounds(100,100,230,87);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JRadioButton radioButton=new JRadioButton();    //创建普通单选按钮
-		getContentPane().add(radioButton);
 		radioButton.setText("NICE");
 		getContentPane().add(radioButton);
 		JRadioButton radioButton_1=new JRadioButton("YES");

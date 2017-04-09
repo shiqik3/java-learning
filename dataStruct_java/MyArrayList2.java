@@ -82,7 +82,11 @@ public class MyArrayList2<AnyType> implements Iterable<AnyType>{
 	public java.util.Iterator<AnyType> iterator() {
 		return new ArrayListIterator();
 	}
+	
+	
+	
 	private class ArrayListIterator implements java.util.Iterator<AnyType>{
+		//迭代器
 		private int current=0;
 		public ArrayListIterator(){};
 		public boolean hasNext(){
@@ -95,17 +99,34 @@ public class MyArrayList2<AnyType> implements Iterable<AnyType>{
 			return theItems[current++];
 		}
 		public void remove(){
-			MyArrayList2.this.remove(--current);
+			MyArrayList2.this.remove(--current);  //未进行错误检测
 		}
 	}
 	
 	
 	public static void main(String[]args){
+		//java程序主入口
 		MyArrayList2 list=new MyArrayList2();
-		for(int i=0;i<100;i++){
-			list.add((char)(Math.random()*100));
+		for(int i=0;i<20;i++){
+			list.add(String.valueOf((int)(Math.random()*100)));
 		}
+		//iterator.remove();   bug未进行错误检测
 		list.display();
+		System.out.println();
+		//Iterator iterator=list.iterator();
+		//System.out.println(iterator.next());
+		//iterator.remove();
+		//list.display();
+		String a="123 235 124";
+		String[] c=a.split(" ");
+		int b;
+		try{
+			b=Integer.parseInt(c[1]);
+		}catch(Exception e){
+			System.out.println("字符串转数字失败");
+			b=9;
+		}
+		System.out.println(b);
 	}
 }
 

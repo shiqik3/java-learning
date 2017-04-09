@@ -59,10 +59,10 @@ public class Adt_ArrayList2<AnyType>{
 		}
 		theItems[idx]=x;
 		theSize++;
-		aPointer--;
+		aPointer++;
 	}
 	public AnyType pop(){
-		return pop(size());
+		return pop(size()-1);
 	}
 	private AnyType pop(int idx){
 		AnyType removedItem=theItems[idx];
@@ -90,5 +90,7 @@ public class Adt_ArrayList2<AnyType>{
 			list.push((int)(Math.random()*100));
 		}
 		list.display();
+		System.out.println(list.pop());
+		System.out.println(list.size());
 	}
 }
