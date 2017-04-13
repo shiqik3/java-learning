@@ -8,11 +8,12 @@ import java.awt.Panel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class JTextFieldDemo extends JFrame{
 	private JTextField textField_3;
-	private JTextField textField_2;
+	private JPasswordField textField_2;
 	private JTextField textField_1;
 	private JTextField textField;
 	Panel panel=new Panel();
@@ -35,7 +36,7 @@ public class JTextFieldDemo extends JFrame{
 		textField_1=new JTextField(4);
 		panel_1.add(textField_1);
 		panel_2.add(new JLabel("ÄêÁä"));
-		textField_2=new JTextField("¹þ¹þ");
+		textField_2=new JPasswordField("¹þ¹þ");
 		panel_2.add(textField_2);
 		panel_3.add(new JLabel("µØÖ·£º"));
 		textField_3=new JTextField("³¤",12);
