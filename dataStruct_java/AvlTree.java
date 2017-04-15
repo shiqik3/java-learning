@@ -39,28 +39,6 @@ public class AvlTree<AnyType extends Comparable <?super AnyType>>{
 		}
 		return balance(t);
 	}
-	public void insert2(AnyType t){
-		root=insert(t,root);
-	}
-	private AvlNode<AnyType> insert2(AnyType x,AvlNode<AnyType> t){
-		ht=t.height;
-		while(t!=null){
-			int compareResult=x.compareTo(t.element);
-			if(compareResult<0){
-				ht++;
-				t.left=insert(x,t.left);
-			}else if(compareResult>0){
-				ht++;
-				t.right=insert(x,t.right);
-			}else{
-				System.out.println("插入失败，数值相同");;
-			}
-		}
-		if(t==null){
-			return new AvlNode(x,null,null,ht);
-		}
-		return balance(t);
-	}
 	
 	public AvlNode findMin(){
 		return findMin(root);
@@ -134,7 +112,7 @@ public class AvlTree<AnyType extends Comparable <?super AnyType>>{
 		return rotateWithLeftChild(k3);
 	}
 	private AvlNode<AnyType> doubleWithRightChild(AvlNode<AnyType> k3){
-		k3.right=rotateWithLeftChild(k3);
+		k3.right=rotateWithLeftChild(k3.right);
 		return rotateWithRightChild(k3);
 	}
 	
@@ -171,7 +149,7 @@ public class AvlTree<AnyType extends Comparable <?super AnyType>>{
 		int t;
 		for(int i=0;i<10;i++){
 			t=(int)(Math.random()*100);
-			tree.insert2(t);
+			tree.insert(t);
 		}
 		tree.printTree();
 	}
