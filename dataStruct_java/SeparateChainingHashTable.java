@@ -99,32 +99,25 @@ public class SeparateChainingHashTable<AnyType>{
 		return hashVal;
 	}
 	
-	private static void nextPrime(int n){
-		int list[]=new int[250];
-		for(int i=0;i<n;i++){
-			list[i]=1;
-		}
-		list[0]=0;
-		for(int j=0;j<n;j++){
-			if(list[j]==1){
-				for(int k=2;k<j;k++){
-					if(((2*j+1)%k==0)&&(list[k]==1)){
-						list[j]=0;
-					}
-				}
+	private static int nextPrime(int n){
+		for(int i=n;i>0;i++){
+			if(isPrime(i)==true){
+				return i;
 			}
 		}
-		for(int i=0;i<n;i++){
-			if(list[i]==1){
-				System.out.println(2*i+1);
-			}
-		}
-		
-		
+		return 0;
 	}
-//	private static boolean isPrime(int n){
-//		
-//	}
+	private static boolean isPrime(int n){
+		if(n==1||n==2){
+			return true;
+		}
+		for(int i=2;i<(n/2);i++){
+			if(n%i==0){
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	public static void main(String[]args){
 		nextPrime(250);

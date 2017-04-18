@@ -2,6 +2,8 @@ package swing_study;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -12,42 +14,68 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 
 public class TickCount extends JFrame{
+	private JLabel label[]=new JLabel[4];
 	private JRadioButton btn[]=new JRadioButton[4];
 	private JProgressBar pro[]=new JProgressBar[4];
 	private JPanel panel=new JPanel();
 	private JPanel panel2=new JPanel();
+	private JPanel pan[]=new JPanel[4];
 	private ButtonGroup group=new ButtonGroup();
 	private JButton submit=new JButton("Ìá½»");
 	private JButton update=new JButton("Ë¢ÐÂ");
+	private String btnText=new String();
 	
 	public TickCount(){
 		super("Í¶Æ±¼ÆÊýÆ÷");
-		this.setBounds(100, 100, 400, 200);
+		this.setBounds(100, 100, 400, 250);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new FlowLayout());
 		this.setResizable(true);
 		panel.setName("Ñ¡ÔñÄã×îÏ²»¶µÄÔË¶¯");
-		btn[0]=new JRadioButton("Æ¹ÅÒÇò");
-		btn[1]=new JRadioButton("×ãÇò");
-		btn[2]=new JRadioButton("ÀºÇò");
-		btn[3]=new JRadioButton("ÍøÇò");
+		btn[0]=new JRadioButton("Æ¹ÅÒÇò:");
+		btn[1]=new JRadioButton("×ãÇò:    ");
+		btn[2]=new JRadioButton("ÀºÇò:    ");
+		btn[3]=new JRadioButton("ÍøÇò:    ");
 		for(int i=0;i<4;i++){
+			pan[i]=new JPanel();
 			pro[i]=new JProgressBar();
 			pro[i].setStringPainted(true);
 			pro[i].setIndeterminate(false);
 			group.add(btn[i]);
+			btn[i].addActionListener(new BtnListener());
+			label[i]=new JLabel("  0Æ±");
 		}
-		panel.add(btn[0]);
-		panel.add(pro[0]);
-		panel.add(btn[1]);
-		panel.add(pro[1]);
-		panel.add(btn[2]);
-		panel.add(pro[2]);
-		panel.add(btn[3]);
-		panel.add(pro[3]);
+		for(int i=0;i<4;i++){
+			pan[i].add(btn[i]);
+			pan[i].add(pro[i]);
+			pan[i].add(label[i]);
+			pan[i].setLayout(new FlowLayout(FlowLayout.LEFT));
+			panel.add(pan[i]);
+		}
+		panel2.add(submit);
+		panel2.add(update);
 		panel.setLayout(new GridLayout(4,1));
+		panel2.setLayout(new FlowLayout());
 		this.add(panel);
+		this.add(panel2);
 		this.setVisible(true);
+	}
+	
+	private class BtnListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==btn[0]){
+				btnText=btn[0].getText();
+			}else if(e.getSource()==btn[1]){
+				btnText=btn[1].getText();
+			}else if(e.getSource()==btn[2]){
+				btnText=btn[2].getText();
+			}else if(e.getSource()==btn[3]){
+				btnText=btn[3].getText();
+			}else{
+				return;
+			}
+			
+		}
 	}
 	
 	public static void main(String[]args){
