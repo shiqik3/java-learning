@@ -28,7 +28,7 @@ public class Progress extends JFrame{
 		Progress adx=new Progress();    //创建窗体
 		//progressBar.setIndeterminate(true);    //设置进度条为不确定样式
 		int sum=0;
-		for(int i=0;i<=100;i++){
+		for(int i=0;i<=101;i++){
 			try{
 				Thread.sleep(100);    //令当前进程休眠0.1秒
 				sum+=i;

@@ -9,6 +9,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
@@ -22,12 +23,13 @@ public class TickCount extends JFrame{
 	private JPanel pan[]=new JPanel[4];
 	private ButtonGroup group=new ButtonGroup();
 	private JButton submit=new JButton("提交");
-	private JButton update=new JButton("刷新");
-	private String btnText=new String();
+	private JButton clear=new JButton("复位");
+	private int btnnum=5;
+	private int count[]=new int[4];
 	
 	public TickCount(){
 		super("投票计数器");
-		this.setBounds(100, 100, 400, 250);
+		this.setBounds(450, 250, 400, 250);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new FlowLayout());
 		this.setResizable(true);
@@ -37,6 +39,7 @@ public class TickCount extends JFrame{
 		btn[2]=new JRadioButton("篮球:    ");
 		btn[3]=new JRadioButton("网球:    ");
 		for(int i=0;i<4;i++){
+			count[i]=0;
 			pan[i]=new JPanel();
 			pro[i]=new JProgressBar();
 			pro[i].setStringPainted(true);
@@ -52,32 +55,60 @@ public class TickCount extends JFrame{
 			pan[i].setLayout(new FlowLayout(FlowLayout.LEFT));
 			panel.add(pan[i]);
 		}
+		submit.addActionListener(new Btn2Listener());
+		clear.addActionListener(new Btn2Listener());
 		panel2.add(submit);
-		panel2.add(update);
+		panel2.add(clear);
 		panel.setLayout(new GridLayout(4,1));
 		panel2.setLayout(new FlowLayout());
 		this.add(panel);
 		this.add(panel2);
 		this.setVisible(true);
 	}
+	private void clear(){
+		for(int i=0;i<4;i++){
+			pro[i].setValue(0);
+			label[i].setText("  0票");
+			count[i]=0;
+		}
+	}
+	private void doProgressBar(int i){
+		count[i]++;
+		pro[i].setValue(count[i]*10);
+		label[i].setText("  "+count[i]+"票");
+	}
 	
 	private class BtnListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==btn[0]){
-				btnText=btn[0].getText();
+				btnnum=0;
 			}else if(e.getSource()==btn[1]){
-				btnText=btn[1].getText();
+				btnnum=1;
 			}else if(e.getSource()==btn[2]){
-				btnText=btn[2].getText();
+				btnnum=2;
 			}else if(e.getSource()==btn[3]){
-				btnText=btn[3].getText();
+				btnnum=3;
 			}else{
 				return;
 			}
 			
 		}
 	}
-	
+	private class Btn2Listener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==submit){
+				if(btnnum>=0&&btnnum<4){
+					doProgressBar(btnnum);
+				}else{
+					JOptionPane.showMessageDialog(null,
+							"未选择项目!", "系统信息", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}else if(e.getSource()==clear){
+				clear();
+			}
+		}
+	}
 	public static void main(String[]args){
 		new TickCount();
 	}
