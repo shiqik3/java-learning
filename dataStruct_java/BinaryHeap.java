@@ -1,15 +1,11 @@
 package dataStruct_java;
 
-import java.util.ArrayList;
-
 public class BinaryHeap<AnyType extends Comparable<? super AnyType>>{
 	public BinaryHeap(){
 		this(DEFAULT_CAPACITY);
 	}
 	public BinaryHeap(int capacity){
-		array=(AnyType[]) new ArrayList[capacity];
-		for(int i=0;i<capacity;i++){
-		}
+		array=(AnyType[])new Comparable[DEFAULT_CAPACITY];
 	}
 	public BinaryHeap(AnyType[]items){
 		currentSize=items.length;
@@ -28,22 +24,18 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>>{
 	 * @param x the item to insert.
 	 */
 	public void insert(AnyType x){
-		if(currentSize==array.length-1){
+		if(isFull()){
 			enlargeArray(array.length*2+1);
 		}
-		
-		int hole=++currentSize;
-		for(array[0]=x;x.compareTo(array[hole/2])<0;hole/=2){
-			array[hole]=array[hole/2];
-		}
-		array[hole]=x;
+		array[++currentSize]=x;
+		percolateUp(currentSize);
 	}
 	public AnyType findMin(){
 		return array[1];
 	}
 	public AnyType deleteMin(){
 		if(isEmpty()){
-			throw new UnderflowException();
+			System.out.println("Êý×éÏÂÒç");
 		}
 		AnyType minItem=findMin();
 		array[1]=array[currentSize--];
@@ -54,6 +46,9 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>>{
 	public boolean isEmpty(){
 		return currentSize==0;
 	}
+	public boolean isFull(){
+		return currentSize==array.length-1;
+	}
 	public void makeEmpty(){
 		currentSize=0;
 	}
@@ -63,7 +58,19 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>>{
 	private int currentSize;
 	private AnyType[]array;
 	
-	private void percolateUp()
+	private void percolateUp(int hole){
+		int parent;
+		AnyType tmp=array[hole];
+		for(;hole/2>0;hole=parent){
+			parent=hole/2;
+			if(array[parent].compareTo(tmp)>0){
+				array[hole]=array[parent];
+			}else{
+				break;
+			}
+		}
+		array[hole]=tmp;
+	}
 	private void percolateDown(int hole){
 		int child;
 		AnyType tmp=array[hole];
@@ -83,10 +90,27 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>>{
 	}
 	private void buildHeap(){
 		for(int i=currentSize/2;i>0;i--){
-			percolateDown(i);
+			percolateUp(i);
 		}
 	}
 	private void enlargeArray(int newSize){
-		
+		AnyType[] oldlist=array;
+		array=(AnyType[])new Comparable[array.length*2];
+		for(int i=1;i<oldlist.length;i++){
+			array[i]=oldlist[i];
+		}
+	}
+	private void BinaryPrint(){
+		for(int i=1;i<=currentSize;i++){
+			System.out.print(array[i]+" ");
+		}
+	}
+	
+	public static void main(String[]args){
+		BinaryHeap heap=new BinaryHeap();
+		for(int i=0;i<10;i++){
+			heap.insert((int)(Math.random()*100));
+		}
+		heap.BinaryPrint();
 	}
 }
