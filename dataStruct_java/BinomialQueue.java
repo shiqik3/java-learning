@@ -66,7 +66,7 @@ public class BinomialQueue<AnyType extends Comparable<? super AnyType>>{
 		merge(new BinomialQueue<>(x));
 	}
 	public AnyType findMin(){
-		
+		return theTrees[findMinIndex()].element;
 	}
 	/**
 	 * Remove the smallest item from the priority queue.
@@ -74,7 +74,7 @@ public class BinomialQueue<AnyType extends Comparable<? super AnyType>>{
 	 */
 	public AnyType deleteMin(){
 		if(isEmpty()){
-			throw new UnderflowException();
+			System.out.println("´íÎó£¬Êý×éÎª¿Õ");
 		}
 		int minIndex=findMinIndex();
 		AnyType minItem=theTrees[minIndex].element;
@@ -95,10 +95,10 @@ public class BinomialQueue<AnyType extends Comparable<? super AnyType>>{
 		return minItem;
 	}
 	public boolean isEmpty(){
-		
+		return currentSize==0;
 	}
 	public void makeEmpty(){
-		
+		currentSize=0;
 	}
 	
 	private static class Node<AnyType>{
@@ -121,7 +121,8 @@ public class BinomialQueue<AnyType extends Comparable<? super AnyType>>{
 	private Node<AnyType>[] theTrees;
 	
 	private void expandTheTrees(int newNumTrees){
-		
+		Node<AnyType>[] oldTrees=theTrees;
+		theTrees=new Node<AnyType>[newNumTrees]();
 	}
 	/**
 	 * Return the of merging equal-sized t1 and t2
@@ -141,6 +142,12 @@ public class BinomialQueue<AnyType extends Comparable<? super AnyType>>{
 		return (1<<theTrees.length)-1;
 	}
 	private int findMinIndex(){
-		
+		int j=0;
+		for(int i=1;i<theTrees.length;i++){
+			if(theTrees[j].element.compareTo(theTrees[i].element)>0){
+				j=i;
+			}
+		}
+		return j;
 	}
 }
