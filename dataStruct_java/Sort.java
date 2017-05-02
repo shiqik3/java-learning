@@ -15,16 +15,28 @@ public class Sort<AnyType extends Comparable<? super AnyType>>{
 		list=(AnyType[])new Comparable[size];
 		currentSize=0;
 	}
+	private void expandSize(){
+		AnyType[]oldlist=list;
+		list=(AnyType[]) new Comparable[2*oldlist.length];
+		for(int i=0;i<currentSize+1;i++){
+			list[i]=oldlist[i];
+		}
+	}
+	private boolean isFull(){
+		return currentSize==list.length-1;
+	}
 	private void add(AnyType t){
-		list[currentSize+1]=t;
-		currentSize++;
+		if(isFull()){
+			expandSize();
+		}
+		list[++currentSize]=t;
 	}
 	public void Sort(){
-		mergeSort(list,1,currentSize);
+		quickSort(list,1,currentSize);
 	}
 	private void insertionSort(AnyType[] _list,int left,int right){
 		int j;
-		for(int i=left;i<right;i++){
+		for(int i=left;i<=right;i++){
 			AnyType tmp=_list[i];
 			for(j=i;j>left&&tmp.compareTo(_list[j-1])<0;j--){
 				_list[j]=_list[j-1];
@@ -127,6 +139,47 @@ public class Sort<AnyType extends Comparable<? super AnyType>>{
 			list[i]=tmp;
 		}
 	}
+	public void quickSort(AnyType[]_list,int left,int right){
+		//判断数组排序长度，小于20的话使用插入排序
+		if((right-left+1)>20){
+			//首先三值中分法
+			int center=(left+right)/2;
+			if(_list[left].compareTo(_list[center])<0){
+				swapReference(_list,left,center);
+			}
+			if(_list[right].compareTo(_list[left])<0){
+				swapReference(_list,left,right);
+			}
+			if(_list[right].compareTo(_list[center])<0){
+				swapReference(_list,right,center);
+			}
+			//将三值排序后取中间值为枢纽元，放在right-1的位置，为减少比较次数
+			swapReference(_list,center,right-1);
+			AnyType pivot=_list[right-1];
+			//这里进入快速排序主流程
+			int i=left;
+			int j=right-1;
+			for(;;){
+				while(_list[++i].compareTo(pivot)<0){};
+				while(_list[--j].compareTo(pivot)>0){};
+				if(i<j){
+					swapReference(_list,i,j);
+				}else{
+					break;
+				}
+			}
+			swapReference(_list,i,right-1);
+			quickSort(_list,left,i-1);
+			quickSort(_list,i+1,right);
+		}else{
+			insertionSort(_list,left,right);
+		}
+	}
+	public void swapReference(AnyType[] _list,int left,int right){
+		AnyType tmp=_list[left];
+		_list[left]=_list[right];
+		_list[right]=tmp;
+	}
 	/*
 	private static int leftChild(int i){
 		return 2*i+1;
@@ -166,7 +219,7 @@ public class Sort<AnyType extends Comparable<? super AnyType>>{
 	
 	public static void main(String[]args){
 		Sort m=new Sort();
-		for(int i=1;i<11;i++){
+		for(int i=0;i<30;i++){
 			m.add((int)(Math.random()*100));
 		}
 		m.Sort();
