@@ -122,7 +122,7 @@ public class BinomialQueue<AnyType extends Comparable<? super AnyType>>{
 	
 	private void expandTheTrees(int newNumTrees){
 		Node<AnyType>[] oldTrees=theTrees;
-		theTrees=new Node<AnyType>[newNumTrees]();
+		theTrees=new Node[newNumTrees];
 	}
 	/**
 	 * Return the of merging equal-sized t1 and t2
@@ -149,5 +149,17 @@ public class BinomialQueue<AnyType extends Comparable<? super AnyType>>{
 			}
 		}
 		return j;
+	}
+	private void print(){
+		
+	}
+	
+	
+	public void main(String args){
+		BinomialQueue bq=new BinomialQueue();
+		for(int i=7;i>=0;i--){
+			bq.insert(i);
+		}
+		
 	}
 }
