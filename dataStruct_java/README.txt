@@ -5,3 +5,4 @@ to pretend make a new file myself;
 new change£»
 sorry,but i m not really to write my code.
 new day,new lie;
+so£¬we need to pass my exam.S
